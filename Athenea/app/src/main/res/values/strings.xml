@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Athenea</string>
+    <string name="welcome_message">¡Bienvenido a Athenea!</string>
+
+    <string name="title_login">Iniciar Sesión</string>
+    <string name="title_register">Registro de Usuario</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_role">Seleccione Rol (Estudiante/Docente)</string>
+    <string name="btn_login">Entrar</string>
+    <string name="btn_register">Registrarse</string>
+    <string name="error_password_invalid">La contraseña no cumple con los requisitos de seguridad</string>
+
+    <string name="title_recursos">Lista de Recursos</string>
+    <string name="btn_add">Agregar Recurso</string>
+    <string name="confirm_delete">¿Está seguro de eliminar este recurso?</string>
+
+    <string name="hint_confirm_password">Confirmar contraseña</string>
+    <string name="radio_estudiante">Estudiante</string>
+    <string name="radio_docente">Docente</string>
+    <string name="text_have_account">¿Ya tienes cuenta? Inicia sesión</string>
+
+    <string name="hint_titulo">Título</string>
+    <string name="hint_descripcion">Descripción</string>
+    <string name="hint_tipo">Tipo (Libro, Video, etc.)</string>
+    <string name="hint_enlace">URL del recurso</string>
+    <string name="hint_imagen">URL de la imagen</string>
+
+    <string name="error_password_invalid2">La contraseña debe tener 12+ caracteres, Mayúscula, Minúscula, Número y Símbolo</string>
+</resources>
