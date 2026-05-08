@@ -7,24 +7,23 @@
     android:padding="24dp"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="@color/pink_primary"
-        android:textSize="32sp"
-        android:textStyle="bold"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/logo_height"
+        android:src="@drawable/logo_at"
+        android:scaleType="centerInside"
         android:layout_marginBottom="32dp" />
 
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@color/black_deep"
+        android:background="@drawable/rounded_input"
         android:hint="@string/hint_email"
         android:textColorHint="@color/pink_accent"
         android:textColor="@color/white"
-        android:padding="12dp"
+        android:paddingStart="@dimen/input_padding"
+        android:paddingEnd="@dimen/input_padding"
         android:inputType="textEmailAddress"
         android:layout_marginBottom="16dp" />
 
@@ -32,20 +31,24 @@
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@color/black_deep"
+        android:background="@drawable/rounded_input"
         android:hint="@string/hint_password"
         android:textColorHint="@color/pink_accent"
         android:textColor="@color/white"
-        android:padding="12dp"
+        android:paddingStart="@dimen/input_padding"
+        android:paddingEnd="@dimen/input_padding"
         android:inputType="textPassword"
         android:layout_marginBottom="24dp" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="55dp"
+        android:background="@drawable/rounded_input"
         android:backgroundTint="@color/pink_primary"
         android:text="@string/btn_login"
+        android:textAllCaps="false"
+        android:textSize="18sp"
         android:textColor="@color/black_deep"
         android:textStyle="bold" />
 
@@ -55,6 +58,7 @@
         android:layout_height="wrap_content"
         android:text="@string/text_have_account"
         android:textColor="@color/pink_accent"
+        android:textSize="14sp"
         android:layout_marginTop="16dp" />
 
 </LinearLayout>

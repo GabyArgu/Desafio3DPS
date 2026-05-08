@@ -12,12 +12,20 @@
         android:padding="24dp"
         android:gravity="center_horizontal">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:src="@drawable/logo_at"
+            android:scaleType="centerInside"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_register"
             android:textColor="@color/pink_primary"
-            android:textSize="28sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:layout_marginBottom="24dp" />
 
@@ -25,23 +33,24 @@
             android:id="@+id/etRegEmail"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@color/black_deep"
+            android:background="@drawable/rounded_input"
             android:hint="@string/hint_email"
             android:textColorHint="@color/pink_accent"
             android:textColor="@color/white"
-            android:padding="12dp"
-            android:inputType="textEmailAddress"
+            android:paddingStart="@dimen/input_padding"
+            android:paddingEnd="@dimen/input_padding"
             android:layout_marginBottom="12dp" />
 
         <EditText
             android:id="@+id/etRegPassword"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@color/black_deep"
+            android:background="@drawable/rounded_input"
             android:hint="@string/hint_password"
             android:textColorHint="@color/pink_accent"
             android:textColor="@color/white"
-            android:padding="12dp"
+            android:paddingStart="@dimen/input_padding"
+            android:paddingEnd="@dimen/input_padding"
             android:inputType="textPassword"
             android:layout_marginBottom="12dp" />
 
@@ -50,34 +59,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="20dp"
-            android:gravity="center">
-
-            <RadioButton
-                android:id="@+id/rbEstudiante"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/radio_estudiante"
-                android:textColor="@color/white"
-                android:buttonTint="@color/pink_primary"
-                android:checked="true" />
-
-            <RadioButton
-                android:id="@+id/rbDocente"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/radio_docente"
-                android:textColor="@color/white"
-                android:buttonTint="@color/pink_primary"
-                android:layout_marginStart="20dp" />
+            android:gravity="center"
+            android:layout_marginBottom="24dp">
+            <RadioButton android:id="@+id/rbEstudiante" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/radio_estudiante" android:textColor="@color/white" android:buttonTint="@color/pink_primary" android:checked="true"/>
+            <RadioButton android:id="@+id/rbDocente" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/radio_docente" android:textColor="@color/white" android:buttonTint="@color/pink_primary" android:layout_marginStart="16dp"/>
         </RadioGroup>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
+            android:background="@drawable/rounded_input"
             android:backgroundTint="@color/pink_primary"
             android:text="@string/btn_register"
+            android:textAllCaps="false"
+            android:textSize="18sp"
             android:textColor="@color/black_deep"
             android:textStyle="bold" />
 
@@ -87,7 +83,8 @@
             android:layout_height="wrap_content"
             android:text="@string/text_have_account"
             android:textColor="@color/pink_accent"
-            android:layout_marginTop="16dp" />
+            android:textSize="14sp"
+            android:layout_marginTop="20dp" />
 
     </LinearLayout>
 </ScrollView>

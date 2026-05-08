@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="rounded_radius">24dp</dimen>
+    <dimen name="input_padding">16dp</dimen>
+    <dimen name="logo_height">120dp</dimen>
+</resources>
