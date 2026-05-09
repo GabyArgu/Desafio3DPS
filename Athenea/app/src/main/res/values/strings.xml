@@ -18,7 +18,8 @@
     <string name="hint_confirm_password">Confirmar contraseña</string>
     <string name="radio_estudiante">Estudiante</string>
     <string name="radio_docente">Docente</string>
-    <string name="text_have_account">¿Ya tienes cuenta? Inicia sesión</string>
+    <string name="text_have_account">¿No tienes cuenta? Registrate</string>
+    <string name="text_have_account2">¿Ya tienes cuenta? Inicia sesión</string>
 
     <string name="hint_titulo">Título</string>
     <string name="hint_descripcion">Descripción</string>
@@ -27,4 +28,22 @@
     <string name="hint_imagen">URL de la imagen</string>
 
     <string name="error_password_invalid2">La contraseña debe tener 12+ caracteres, Mayúscula, Minúscula, Número y Símbolo</string>
+
+    <string name="title_lista_recursos">Lista de Recursos</string>
+    <string name="desc_fab_add">Agregar nuevo recurso</string>
+
+    <string name="title_add_recurso">Nuevo Recurso</string>
+    <string name="btn_guardar_recurso">Publicar Recurso</string>
+    <string name="error_campo_obligatorio">Este campo es obligatorio</string>
+    <string name="msg_recurso_guardado">¡Recurso compartido con la comunidad!</string>
+
+    <string name="msg_recurso_editado">¡Recurso actualizado con éxito!</string>
+    <string name="error_guardar">No se pudo conectar con el servidor</string>
+    <string-array name="tipos_recursos">
+        <item>Libro PDF</item>
+        <item>Video Tutorial</item>
+        <item>Curso Web</item>
+        <item>Documentación</item>
+        <item>Otro</item>
+    </string-array>
 </resources>

@@ -14,10 +14,10 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:src="@drawable/logo_at"
+            android:layout_height="@dimen/logo_height"
+            android:src="@drawable/logoaten"
             android:scaleType="centerInside"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="70dp"
             android:layout_marginBottom="20dp" />
 
         <TextView
@@ -81,7 +81,7 @@
             android:id="@+id/tvBackToLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_have_account"
+            android:text="@string/text_have_account2"
             android:textColor="@color/pink_accent"
             android:textSize="14sp"
             android:layout_marginTop="20dp" />

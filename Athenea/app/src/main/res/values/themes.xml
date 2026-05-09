@@ -1,9 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Athenea" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.Athenea" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/pink_primary</item>
+        <item name="colorPrimaryVariant">@color/pink_accent</item>
+        <item name="colorOnPrimary">@color/black_deep</item>
+        <item name="android:statusBarColor">@color/dark_bg</item>
     </style>
 
-    <style name="Theme.Athenea" parent="Base.Theme.Athenea" />
+    <style name="RoundedSquare">
+        <item name="cornerSize">16dp</item>
+    </style>
 </resources>

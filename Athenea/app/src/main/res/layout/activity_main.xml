@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/logo_height"
-        android:src="@drawable/logo_at"
+        android:src="@drawable/logoaten"
         android:scaleType="centerInside"
         android:layout_marginBottom="32dp" />
 
