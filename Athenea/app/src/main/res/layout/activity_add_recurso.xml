@@ -1,110 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_bg"
-    android:fillViewport="true">
+    android:background="@color/dark_bg">
 
-    <LinearLayout
+    <ImageButton
+        android:id="@+id/btnCerrar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/desc_cerrar"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        app:tint="@color/pink_primary" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="28dp"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="100dp"
-            android:src="@drawable/logoaten"
-            android:scaleType="centerInside"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="10dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_add_recurso"
-            android:textColor="@color/pink_primary"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="32dp" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="28dp">
 
-        <EditText
-            android:id="@+id/etTitulo"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@drawable/rounded_input"
-            android:hint="@string/hint_titulo"
-            android:textColorHint="@color/pink_accent"
-            android:textColor="@color/white"
-            android:paddingHorizontal="20dp"
-            android:layout_marginBottom="16dp"
-            android:inputType="textCapSentences" />
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/logoaten" />
 
-        <EditText
-            android:id="@+id/etDescripcion"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:background="@drawable/rounded_input"
-            android:hint="@string/hint_descripcion"
-            android:textColorHint="@color/pink_accent"
-            android:textColor="@color/white"
-            android:padding="20dp"
-            android:gravity="top"
-            android:layout_marginBottom="16dp"
-            android:inputType="textMultiLine" />
+            <TextView
+                android:id="@+id/tvTitleAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:text="@string/title_add_recurso"
+                android:textColor="@color/pink_primary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_input"
-            android:paddingHorizontal="12dp">
-
-            <Spinner
-                android:id="@+id/spinnerTipo"
+            <EditText
+                android:id="@+id/etTitulo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/pink_accent"
-                android:paddingStart="8dp" />
-        </FrameLayout>
+                android:layout_height="55dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_input"
+                android:hint="@string/hint_titulo"
+                android:inputType="textCapSentences"
+                android:paddingHorizontal="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/pink_accent" />
 
-        <EditText
-            android:id="@+id/etEnlace"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@drawable/rounded_input"
-            android:hint="@string/hint_enlace"
-            android:textColorHint="@color/pink_accent"
-            android:textColor="@color/white"
-            android:paddingHorizontal="20dp"
-            android:layout_marginBottom="16dp"
-            android:inputType="textUri" />
+            <EditText
+                android:id="@+id/etDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_input"
+                android:gravity="top"
+                android:hint="@string/hint_descripcion"
+                android:inputType="textMultiLine"
+                android:padding="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/pink_accent" />
 
-        <EditText
-            android:id="@+id/etImagen"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@drawable/rounded_input"
-            android:hint="@string/hint_imagen"
-            android:textColorHint="@color/pink_accent"
-            android:textColor="@color/white"
-            android:paddingHorizontal="20dp"
-            android:layout_marginBottom="40dp"
-            android:inputType="textUri" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_input"
+                android:paddingHorizontal="12dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnGuardar"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/rounded_input"
-            app:backgroundTint="@color/pink_primary"
-            android:text="@string/btn_guardar_recurso"
-            android:textAllCaps="false"
-            android:textSize="18sp"
-            android:textColor="@color/black_deep"
-            android:textStyle="bold" />
+                <Spinner
+                    android:id="@+id/spinnerTipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/pink_accent"
+                    android:paddingStart="8dp" />
+            </FrameLayout>
 
-    </LinearLayout>
-</ScrollView>
+            <EditText
+                android:id="@+id/etEnlace"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_input"
+                android:hint="@string/hint_enlace"
+                android:inputType="textUri"
+                android:paddingHorizontal="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/pink_accent" />
+
+            <EditText
+                android:id="@+id/etImagen"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/rounded_input"
+                android:hint="@string/hint_imagen"
+                android:inputType="textUri"
+                android:paddingHorizontal="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/pink_accent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/rounded_input"
+                android:text="@string/btn_guardar_recurso"
+                android:textAllCaps="false"
+                android:textColor="@color/black_deep"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/pink_primary" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEliminar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/rounded_input"
+                android:text="@string/btn_eliminar_recurso"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:backgroundTint="#B30000" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

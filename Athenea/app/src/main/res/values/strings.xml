@@ -46,4 +46,9 @@
         <item>Documentación</item>
         <item>Otro</item>
     </string-array>
+
+    <string name="btn_eliminar_recurso">Eliminar Recurso</string>
+    <string name="confirm_delete2">¿Estás seguro de que quieres eliminar este recurso?</string>
+    <string name="msg_recurso_eliminado">Recurso eliminado correctamente</string>
+    <string name="desc_cerrar">Cerrar pantalla</string>
 </resources>
