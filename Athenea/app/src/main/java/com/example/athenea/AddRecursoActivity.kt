@@ -3,10 +3,11 @@ package com.example.athenea
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.athenea.databinding.ActivityAddRecursoBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,7 +30,6 @@ class AddRecursoActivity : AppCompatActivity() {
             prellenarDatos(recursoAEditar!!)
         }
 
-        // Botón de cerrar (X)
         binding.btnCerrar.setOnClickListener { finish() }
 
         binding.btnGuardar.setOnClickListener {
@@ -50,7 +50,7 @@ class AddRecursoActivity : AppCompatActivity() {
     private fun prellenarDatos(recurso: Recurso) {
         binding.tvTitleAdd.text = "Editar Recurso"
         binding.btnGuardar.text = "Actualizar Cambios"
-        binding.btnEliminar.visibility = View.VISIBLE // Mostrar eliminar solo al editar
+        binding.btnEliminar.visibility = View.VISIBLE
 
         binding.etTitulo.setText(recurso.titulo)
         binding.etDescripcion.setText(recurso.descripcion)
@@ -63,12 +63,23 @@ class AddRecursoActivity : AppCompatActivity() {
     }
 
     private fun mostrarDialogoEliminar() {
-        AlertDialog.Builder(this)
-            .setTitle("Eliminar")
-            .setMessage(R.string.confirm_delete)
-            .setPositiveButton("Sí, eliminar") { _, _ -> eliminarRecurso() }
-            .setNegativeButton("Cancelar", null)
-            .show()
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.dialog_confirm_delete, null)
+
+        val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmarEliminar)
+        val btnCancelar = view.findViewById<Button>(R.id.btnCancelarEliminar)
+
+        btnConfirmar.setOnClickListener {
+            dialog.dismiss()
+            eliminarRecurso()
+        }
+
+        btnCancelar.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.setContentView(view)
+        dialog.show()
     }
 
     private fun eliminarRecurso() {
@@ -76,12 +87,12 @@ class AddRecursoActivity : AppCompatActivity() {
             RetrofitClient.instance.deleteRecurso(id).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(this@AddRecursoActivity, R.string.msg_recurso_eliminado, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@AddRecursoActivity, getString(R.string.msg_recurso_eliminado), Toast.LENGTH_SHORT).show()
                         finish()
                     }
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Toast.makeText(this@AddRecursoActivity, "Error al eliminar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddRecursoActivity, "Error de red al eliminar", Toast.LENGTH_SHORT).show()
                 }
             })
         }
@@ -125,7 +136,7 @@ class AddRecursoActivity : AppCompatActivity() {
                 }
             }
             override fun onFailure(call: Call<Recurso>, t: Throwable) {
-                Toast.makeText(this@AddRecursoActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddRecursoActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
         })
     }
