@@ -55,5 +55,5 @@ Athenea es una plataforma móvil robusta desarrollada en **Kotlin** para el ecos
 ## 📝 Enlaces del Proyecto
 
 * **Video Explicativo:** [Video](https://drive.google.com/file/d/1wvuWc79Z2OU2wjsQls9IS97su83csUuZ/view?usp=sharing)
-* **Repositorio:** #3 - Sistema de Gestión de Recursos
-* **APK:** 9 de mayo de 2026
+* **Repositorio:** [Github](https://github.com/GabyArgu/Desafio3DPS)
+* **APK:** [APK Athenea](https://drive.google.com/file/d/1Jua6AelcbnD-zRjrGNa4jzXEdKGvxJBL/view?usp=sharing)
