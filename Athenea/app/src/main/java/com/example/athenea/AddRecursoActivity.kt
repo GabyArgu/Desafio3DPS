@@ -26,50 +26,21 @@ class AddRecursoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupSpinner()
-
         recursoAEditar = intent.getSerializableExtra("RECURSO_EDITAR") as? Recurso
 
         if (recursoAEditar != null) {
             prellenarDatos(recursoAEditar!!)
         }
 
-        binding.btnCerrar.setOnClickListener {
-            finish()
-        }
-
-        binding.btnGuardar.setOnClickListener {
-            if (validarFormulario()) ejecutarAccion()
-        }
-
-        binding.btnEliminar.setOnClickListener {
-            mostrarDialogoEliminar()
-        }
-    }
-
-    private fun showCustomToast(message: String) {
-        val inflater = LayoutInflater.from(this)
-        val layout = inflater.inflate(R.layout.custom_toast, null)
-        val text = layout.findViewById<TextView>(R.id.toast_text)
-        text.text = message
-
-        val customToast = Toast(applicationContext)
-        customToast.setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 150)
-        customToast.duration = Toast.LENGTH_LONG
-        customToast.view = layout
-        customToast.show()
-    }
-
-    private fun setupSpinner() {
-        val adapter = ArrayAdapter.createFromResource(this, R.array.tipos_recursos, R.layout.spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerTipo.adapter = adapter
+        binding.btnCerrar.setOnClickListener { finish() }
+        binding.btnGuardar.setOnClickListener { if (validarFormulario()) ejecutarAccion() }
+        binding.btnEliminar.setOnClickListener { mostrarDialogoEliminar() }
     }
 
     private fun prellenarDatos(recurso: Recurso) {
         binding.tvTitleAdd.text = "Editar Recurso"
         binding.btnGuardar.text = "Actualizar Cambios"
         binding.btnEliminar.visibility = View.VISIBLE
-
         binding.etTitulo.setText(recurso.titulo)
         binding.etDescripcion.setText(recurso.descripcion)
         binding.etEnlace.setText(recurso.enlace)
@@ -83,19 +54,11 @@ class AddRecursoActivity : AppCompatActivity() {
     private fun mostrarDialogoEliminar() {
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.dialog_confirm_delete, null)
-
-        val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmarEliminar)
-        val btnCancelar = view.findViewById<Button>(R.id.btnCancelarEliminar)
-
-        btnConfirmar.setOnClickListener {
+        view.findViewById<Button>(R.id.btnConfirmarEliminar).setOnClickListener {
             dialog.dismiss()
             eliminarRecurso()
         }
-
-        btnCancelar.setOnClickListener {
-            dialog.dismiss()
-        }
-
+        view.findViewById<Button>(R.id.btnCancelarEliminar).setOnClickListener { dialog.dismiss() }
         dialog.setContentView(view)
         dialog.show()
     }
@@ -139,23 +102,33 @@ class AddRecursoActivity : AppCompatActivity() {
             imagen = binding.etImagen.text.toString().trim().ifEmpty { "https://via.placeholder.com/300" }
         )
 
-        val call = if (recursoAEditar == null) {
-            RetrofitClient.instance.addRecurso(recursoFinal)
-        } else {
-            RetrofitClient.instance.updateRecurso(recursoAEditar!!.id!!, recursoFinal)
-        }
+        val call = if (recursoAEditar == null) RetrofitClient.instance.addRecurso(recursoFinal)
+        else RetrofitClient.instance.updateRecurso(recursoAEditar!!.id!!, recursoFinal)
 
         call.enqueue(object : Callback<Recurso> {
             override fun onResponse(call: Call<Recurso>, response: Response<Recurso>) {
                 if (response.isSuccessful) {
-                    val msg = if (recursoAEditar == null) "Recurso guardado" else "Recurso editado"
-                    showCustomToast(msg)
+                    showCustomToast(if (recursoAEditar == null) "Recurso guardado" else "Recurso editado")
                     finish()
                 }
             }
-            override fun onFailure(call: Call<Recurso>, t: Throwable) {
-                showCustomToast("Error de conexión")
-            }
+            override fun onFailure(call: Call<Recurso>, t: Throwable) { showCustomToast("Error de conexión") }
         })
+    }
+
+    private fun setupSpinner() {
+        val adapter = ArrayAdapter.createFromResource(this, R.array.tipos_recursos, R.layout.spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerTipo.adapter = adapter
+    }
+
+    private fun showCustomToast(message: String) {
+        val layout = LayoutInflater.from(this).inflate(R.layout.custom_toast, null)
+        layout.findViewById<TextView>(R.id.toast_text).text = message
+        val toast = Toast(applicationContext)
+        toast.setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 150)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
     }
 }

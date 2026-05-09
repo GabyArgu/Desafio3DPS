@@ -57,4 +57,13 @@
     <string name="btn_quitar_favorito">Quitar Favoritos</string>
     <string name="califica_recurso">Califica este recurso:</string>
     <string name="conteo_votos_format">%1$d usuarios - Promedio: %2$.1f</string>
+    <string name="btn_logout">Cerrar Sesión</string>
+    <string name="confirm_delete_title">¿Eliminar recurso?</string>
+    <string name="confirm_delete_msg">Esta acción no se puede deshacer.</string>
+    <string name="btn_eliminar">Eliminar</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="filtro_todos">Todos</string>
+    <string name="filtro_favs">Favoritos</string>
+    <string name="filter_hint">Buscar por título, ID o tipo...</string>
+    <string name="msg_delete_success">Recurso eliminado correctamente</string>
 </resources>
