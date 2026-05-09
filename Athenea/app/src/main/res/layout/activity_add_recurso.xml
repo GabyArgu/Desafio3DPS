@@ -43,11 +43,89 @@
                 android:id="@+id/tvTitleAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="24dp"
                 android:text="@string/title_add_recurso"
                 android:textColor="@color/pink_primary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/layoutStats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/rounded_input"
+                android:backgroundTint="#1AFFFFFF"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_calificacion"
+                        android:textColor="@color/pink_accent"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@android:drawable/btn_star_big_on"
+                            android:contentDescription="@string/label_star"
+                            app:tint="@color/pink_primary" />
+                        <TextView
+                            android:id="@+id/tvStatRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            tools:text="4.5" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:background="#33FFFFFF" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_votos"
+                        android:textColor="@color/pink_accent"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tvStatVotos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="12" />
+                </LinearLayout>
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/etTitulo"
@@ -56,12 +134,12 @@
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/rounded_input"
                 android:hint="@string/hint_titulo"
-                android:importantForAutofill="no"
+                android:importantForAutofill="yes"
+                android:autofillHints="name"
                 android:inputType="textCapSentences"
                 android:paddingHorizontal="20dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/pink_accent"
-                tools:ignore="Autofill" />
+                android:textColorHint="@color/pink_accent" />
 
             <EditText
                 android:id="@+id/etDescripcion"
@@ -75,8 +153,7 @@
                 android:inputType="textMultiLine"
                 android:padding="20dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/pink_accent"
-                tools:ignore="Autofill" />
+                android:textColorHint="@color/pink_accent" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -89,8 +166,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/pink_accent"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp" />
+                    android:contentDescription="@string/label_tipo" />
             </FrameLayout>
 
             <EditText
@@ -100,12 +176,12 @@
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/rounded_input"
                 android:hint="@string/hint_enlace"
-                android:importantForAutofill="no"
+                android:importantForAutofill="yes"
+                android:autofillHints="url"
                 android:inputType="textUri"
                 android:paddingHorizontal="20dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/pink_accent"
-                tools:ignore="Autofill" />
+                android:textColorHint="@color/pink_accent" />
 
             <EditText
                 android:id="@+id/etImagen"
@@ -114,12 +190,12 @@
                 android:layout_marginBottom="40dp"
                 android:background="@drawable/rounded_input"
                 android:hint="@string/hint_imagen"
-                android:importantForAutofill="no"
+                android:importantForAutofill="yes"
+                android:autofillHints="url"
                 android:inputType="textUri"
                 android:paddingHorizontal="20dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/pink_accent"
-                tools:ignore="Autofill" />
+                android:textColorHint="@color/pink_accent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnGuardar"

@@ -34,12 +34,7 @@ class AddRecursoActivity : AppCompatActivity() {
             prellenarDatos(recursoAEditar!!)
         }
 
-        // --- BOTONES DE NAVEGACIÓN ---
-
-        // Esta es la X para cerrar/cancelar
-        binding.btnCerrar.setOnClickListener {
-            finish()
-        }
+        binding.btnCerrar.setOnClickListener { finish() }
 
         binding.btnGuardar.setOnClickListener {
             if (validarFormulario()) ejecutarAccion()
@@ -55,6 +50,11 @@ class AddRecursoActivity : AppCompatActivity() {
         binding.btnGuardar.text = "Actualizar Cambios"
         binding.btnEliminar.visibility = View.VISIBLE
 
+        // Actualizar Estadísticas para el docente
+        binding.layoutStats.visibility = View.VISIBLE
+        binding.tvStatRating.text = String.format("%.1f", recurso.rating)
+        binding.tvStatVotos.text = recurso.voteCount.toString()
+
         binding.etTitulo.setText(recurso.titulo)
         binding.etDescripcion.setText(recurso.descripcion)
         binding.etEnlace.setText(recurso.enlace)
@@ -67,9 +67,7 @@ class AddRecursoActivity : AppCompatActivity() {
 
     private fun mostrarDialogoEliminar() {
         val dialog = BottomSheetDialog(this)
-        // Usamos el diseño exacto que pasaste
         val view = layoutInflater.inflate(R.layout.dialog_confirm_delete, null)
-
         val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmarEliminar)
         val btnCancelar = view.findViewById<Button>(R.id.btnCancelarEliminar)
 
@@ -77,11 +75,7 @@ class AddRecursoActivity : AppCompatActivity() {
             dialog.dismiss()
             eliminarRecurso()
         }
-
-        btnCancelar.setOnClickListener {
-            dialog.dismiss()
-        }
-
+        btnCancelar.setOnClickListener { dialog.dismiss() }
         dialog.setContentView(view)
         dialog.show()
     }
@@ -124,7 +118,10 @@ class AddRecursoActivity : AppCompatActivity() {
             descripcion = binding.etDescripcion.text.toString().trim(),
             tipo = binding.spinnerTipo.selectedItem.toString(),
             enlace = binding.etEnlace.text.toString().trim(),
-            imagen = binding.etImagen.text.toString().trim().ifEmpty { "https://via.placeholder.com/300" }
+            imagen = binding.etImagen.text.toString().trim().ifEmpty { "https://via.placeholder.com/300" },
+            rating = recursoAEditar?.rating ?: 0.0,
+            voteCount = recursoAEditar?.voteCount ?: 0,
+            isFavorite = recursoAEditar?.isFavorite ?: false
         )
 
         val call = if (recursoAEditar == null) {
@@ -136,15 +133,14 @@ class AddRecursoActivity : AppCompatActivity() {
         call.enqueue(object : Callback<Recurso> {
             override fun onResponse(call: Call<Recurso>, response: Response<Recurso>) {
                 if (response.isSuccessful) {
-                    val msg = if (recursoAEditar == null) "Recurso guardado con éxito" else "Cambios guardados"
-                    showCustomToast(msg)
+                    showCustomToast(if (recursoAEditar == null) "Recurso guardado" else "Cambios guardados")
                     finish()
                 } else {
-                    showCustomToast("Error al procesar la solicitud")
+                    showCustomToast("Error al procesar solicitud")
                 }
             }
             override fun onFailure(call: Call<Recurso>, t: Throwable) {
-                showCustomToast("Error de conexión con Athenea")
+                showCustomToast("Error de conexión")
             }
         })
     }

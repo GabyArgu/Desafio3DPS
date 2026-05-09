@@ -88,4 +88,10 @@
 
     <string name="desc_imagen_recurso">Imagen ilustrativa del material educativo</string>
     <string name="desc_boton_favorito">Botón para guardar o quitar de favoritos</string>
+    <string name="rendi_fav">Rendimiento del Recurso</string>
+
+    <string name="label_calificacion">CALIFICACIÓN</string>
+    <string name="label_votos">VOTOS</string>
+    <string name="label_star">Estrella</string>
+    <string name="label_tipo">Seleccionar tipo de recurso</string>
 </resources>
