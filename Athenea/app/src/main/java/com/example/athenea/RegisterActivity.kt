@@ -1,6 +1,9 @@
 package com.example.athenea
 
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.athenea.databinding.ActivityRegisterBinding
@@ -18,11 +21,10 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnRegister.setOnClickListener {
-            val email = binding.etRegEmail.text.toString()
+            val email = binding.etRegEmail.text.toString().trim()
             val pass = binding.etRegPassword.text.toString()
             val role = if (binding.rbDocente.isChecked) "Docente" else "Estudiante"
 
-            // 1. Validaciones de UI
             if (email.isEmpty()) {
                 binding.etRegEmail.error = "El correo es obligatorio"
                 return@setOnClickListener
@@ -30,26 +32,24 @@ class RegisterActivity : AppCompatActivity() {
 
             if (!Validator.isPasswordValid(pass)) {
                 binding.etRegPassword.error = getString(R.string.error_password_invalid2)
-                Toast.makeText(this, "Contraseña no válida", Toast.LENGTH_SHORT).show()
+                showCustomToast("Contraseña no válida")
                 return@setOnClickListener
             }
 
-            // 2. Crear el objeto usuario
             val nuevoUsuario = User(email = email, password = pass, role = role)
 
-            // 3. Mandar a la API
             RetrofitClient.instance.registrarUsuario(nuevoUsuario).enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(this@RegisterActivity, "¡Usuario $email registrado con éxito!", Toast.LENGTH_LONG).show()
-                        finish() // Regresa al Login
+                        showCustomToast("¡Usuario $email registrado!")
+                        finish()
                     } else {
-                        Toast.makeText(this@RegisterActivity, "Error al guardar: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        showCustomToast("Error al guardar: ${response.code()}")
                     }
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
-                    Toast.makeText(this@RegisterActivity, "Error de red: ${t.message}", Toast.LENGTH_SHORT).show()
+                    showCustomToast("Error de red: ${t.message}")
                 }
             })
         }
@@ -57,5 +57,18 @@ class RegisterActivity : AppCompatActivity() {
         binding.tvBackToLogin.setOnClickListener {
             finish()
         }
+    }
+
+    private fun showCustomToast(message: String) {
+        val inflater = LayoutInflater.from(this)
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+        val text = layout.findViewById<TextView>(R.id.toast_text)
+        text.text = message
+
+        val customToast = Toast(applicationContext)
+        customToast.setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 150)
+        customToast.duration = Toast.LENGTH_LONG
+        customToast.view = layout
+        customToast.show()
     }
 }

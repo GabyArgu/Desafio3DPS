@@ -1,9 +1,12 @@
 package com.example.athenea
 
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.athenea.databinding.ActivityAddRecursoBinding
@@ -30,7 +33,9 @@ class AddRecursoActivity : AppCompatActivity() {
             prellenarDatos(recursoAEditar!!)
         }
 
-        binding.btnCerrar.setOnClickListener { finish() }
+        binding.btnCerrar.setOnClickListener {
+            finish()
+        }
 
         binding.btnGuardar.setOnClickListener {
             if (validarFormulario()) ejecutarAccion()
@@ -39,6 +44,20 @@ class AddRecursoActivity : AppCompatActivity() {
         binding.btnEliminar.setOnClickListener {
             mostrarDialogoEliminar()
         }
+    }
+
+    private fun showCustomToast(message: String) {
+        val inflater = LayoutInflater.from(this)
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+
+        val text = layout.findViewById<TextView>(R.id.toast_text)
+        text.text = message
+
+        val customToast = Toast(applicationContext)
+        customToast.setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 150)
+        customToast.duration = Toast.LENGTH_LONG
+        customToast.view = layout
+        customToast.show()
     }
 
     private fun setupSpinner() {
@@ -87,12 +106,12 @@ class AddRecursoActivity : AppCompatActivity() {
             RetrofitClient.instance.deleteRecurso(id).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(this@AddRecursoActivity, getString(R.string.msg_recurso_eliminado), Toast.LENGTH_SHORT).show()
+                        showCustomToast(getString(R.string.msg_recurso_eliminado))
                         finish()
                     }
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Toast.makeText(this@AddRecursoActivity, "Error de red al eliminar", Toast.LENGTH_SHORT).show()
+                    showCustomToast("Error de red al eliminar")
                 }
             })
         }
@@ -130,13 +149,13 @@ class AddRecursoActivity : AppCompatActivity() {
         call.enqueue(object : Callback<Recurso> {
             override fun onResponse(call: Call<Recurso>, response: Response<Recurso>) {
                 if (response.isSuccessful) {
-                    val msg = if (recursoAEditar == null) R.string.msg_recurso_guardado else R.string.msg_recurso_editado
-                    Toast.makeText(this@AddRecursoActivity, getString(msg), Toast.LENGTH_LONG).show()
+                    val msgId = if (recursoAEditar == null) R.string.msg_recurso_guardado else R.string.msg_recurso_editado
+                    showCustomToast(getString(msgId))
                     finish()
                 }
             }
             override fun onFailure(call: Call<Recurso>, t: Throwable) {
-                Toast.makeText(this@AddRecursoActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
+                showCustomToast("Error de conexión")
             }
         })
     }

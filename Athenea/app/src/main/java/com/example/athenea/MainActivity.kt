@@ -2,6 +2,9 @@ package com.example.athenea
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.athenea.databinding.ActivityMainBinding
@@ -23,38 +26,35 @@ class MainActivity : AppCompatActivity() {
             val passEntrada = binding.etPassword.text.toString().trim()
 
             if (emailEntrada.isEmpty() || passEntrada.isEmpty()) {
-                Toast.makeText(this, "Por favor completa los campos", Toast.LENGTH_SHORT).show()
+                showCustomToast("Por favor completa los campos")
                 return@setOnClickListener
             }
 
-            // Llamada a la API para obtener todos los usuarios y validar
             RetrofitClient.instance.getUsuarios().enqueue(object : Callback<List<User>> {
                 override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                     if (response.isSuccessful) {
                         val usuarios = response.body()
-                        // Buscamos si existe un usuario con esas credenciales
                         val usuarioEncontrado = usuarios?.find {
                             it.email == emailEntrada && it.password == passEntrada
                         }
 
                         if (usuarioEncontrado != null) {
-                            Toast.makeText(this@MainActivity, "¡Bienvenido, ${usuarioEncontrado.role}!", Toast.LENGTH_SHORT).show()
+                            showCustomToast("¡Bienvenido, ${usuarioEncontrado.role}!")
 
-                            // Pasamos a la siguiente pantalla enviando el ROL real
                             val intent = Intent(this@MainActivity, RecursosActivity::class.java)
                             intent.putExtra("USER_ROLE", usuarioEncontrado.role)
                             startActivity(intent)
                             finish()
                         } else {
-                            Toast.makeText(this@MainActivity, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                            showCustomToast("Correo o contraseña incorrectos")
                         }
                     } else {
-                        Toast.makeText(this@MainActivity, "Error en el servidor: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        showCustomToast("Error en el servidor: ${response.code()}")
                     }
                 }
 
                 override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                    Toast.makeText(this@MainActivity, "Fallo de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
+                    showCustomToast("Fallo de conexión: ${t.message}")
                 }
             })
         }
@@ -63,5 +63,18 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun showCustomToast(message: String) {
+        val inflater = LayoutInflater.from(this)
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+        val text = layout.findViewById<TextView>(R.id.toast_text)
+        text.text = message
+
+        val customToast = Toast(applicationContext)
+        customToast.setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 150)
+        customToast.duration = Toast.LENGTH_LONG
+        customToast.view = layout
+        customToast.show()
     }
 }
