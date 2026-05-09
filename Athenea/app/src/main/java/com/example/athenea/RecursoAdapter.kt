@@ -1,7 +1,10 @@
 package com.example.athenea
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.athenea.databinding.ItemRecursoBinding
@@ -25,13 +28,16 @@ class RecursosAdapter(
         holder.binding.tvTipo.text = recurso.tipo
         holder.binding.tvDescripcion.text = recurso.descripcion
 
-        // Lógica de la estrella: rellena si es favorito, vacía si no
-        val starIcon = if (recurso.isFavorite) {
-            android.R.drawable.btn_star_big_on
+        // Lógica de colores y estados de la estrella
+        if (recurso.isFavorite) {
+            holder.binding.btnFavorite.setImageResource(android.R.drawable.btn_star_big_on)
+            // Rosado potente (#FF017E)
+            holder.binding.btnFavorite.imageTintList = ColorStateList.valueOf(Color.parseColor("#FF017E"))
         } else {
-            android.R.drawable.btn_star_big_off
+            holder.binding.btnFavorite.setImageResource(android.R.drawable.btn_star_big_off)
+            // Rosado clarito (#E19CBB)
+            holder.binding.btnFavorite.imageTintList = ColorStateList.valueOf(Color.parseColor("#E19CBB"))
         }
-        holder.binding.btnFavorite.setImageResource(starIcon)
 
         Glide.with(holder.itemView.context)
             .load(recurso.imagen)

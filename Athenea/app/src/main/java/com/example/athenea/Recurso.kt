@@ -9,5 +9,7 @@ data class Recurso(
     val tipo: String,
     val enlace: String,
     val imagen: String,
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean = false,
+    var rating: Double = 0.0,
+    var voteCount: Int = 0
 ) : Serializable

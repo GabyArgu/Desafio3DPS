@@ -27,7 +27,10 @@ class RecursosActivity : AppCompatActivity() {
         binding = ActivityRecursosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Recuperar el rol del usuario desde el Intent
         userRole = intent.getStringExtra("USER_ROLE") ?: "Estudiante"
+
+        // Control de visibilidad del botón flotante según el rol
         binding.fabAdd.visibility = if (userRole == "Docente") View.VISIBLE else View.GONE
 
         setupRecyclerView()
@@ -47,8 +50,14 @@ class RecursosActivity : AppCompatActivity() {
             },
             onItemClick = { recurso ->
                 if (userRole == "Docente") {
+                    // El docente va a la pantalla de edición
                     val intent = Intent(this, AddRecursoActivity::class.java)
                     intent.putExtra("RECURSO_EDITAR", recurso)
+                    startActivity(intent)
+                } else {
+                    // El estudiante va a la pantalla de detalle para ver y calificar
+                    val intent = Intent(this, DetalleRecursoActivity::class.java)
+                    intent.putExtra("RECURSO", recurso)
                     startActivity(intent)
                 }
             }
@@ -58,11 +67,14 @@ class RecursosActivity : AppCompatActivity() {
     }
 
     private fun toggleFavorite(recurso: Recurso) {
-        val idRecurso = recurso.id ?: return // Si el ID es nulo, salimos para evitar el crash
+        val idRecurso = recurso.id ?: return
 
-        val nuevoEstado = !recurso.isFavorite
+        val originalState = recurso.isFavorite
+        val nuevoEstado = !originalState
+
+        // Cambio visual inmediato
         recurso.isFavorite = nuevoEstado
-        adapter.notifyDataSetChanged() // Refresco inmediato para feedback visual rápido
+        adapter.notifyDataSetChanged()
 
         RetrofitClient.instance.updateRecurso(idRecurso, recurso).enqueue(object : Callback<Recurso> {
             override fun onResponse(call: Call<Recurso>, response: Response<Recurso>) {
@@ -70,18 +82,18 @@ class RecursosActivity : AppCompatActivity() {
                     val mensaje = if (nuevoEstado) "Añadido a favoritos" else "Quitado de favoritos"
                     showCustomToast(mensaje)
                 } else {
-                    // Revertimos el cambio si la API falla
-                    recurso.isFavorite = !nuevoEstado
+                    // Revertir en caso de error en el servidor
+                    recurso.isFavorite = originalState
                     adapter.notifyDataSetChanged()
-                    showCustomToast("Error al guardar en servidor")
+                    showCustomToast("Error al sincronizar con el servidor")
                 }
             }
 
             override fun onFailure(call: Call<Recurso>, t: Throwable) {
-                // Revertimos el cambio si no hay internet
-                recurso.isFavorite = !nuevoEstado
+                // Revertir en caso de fallo de red
+                recurso.isFavorite = originalState
                 adapter.notifyDataSetChanged()
-                showCustomToast("Sin conexión: No se guardó el favorito")
+                showCustomToast("Sin conexión: No se guardó el cambio")
             }
         })
     }

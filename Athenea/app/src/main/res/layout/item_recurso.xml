@@ -27,7 +27,8 @@
             android:orientation="vertical"
             android:layout_toEndOf="@id/ivRecurso"
             android:layout_toStartOf="@+id/btnFavorite"
-            android:layout_marginStart="16dp">
+            android:layout_marginStart="16dp"
+            android:layout_centerVertical="true">
 
             <TextView
                 android:id="@+id/tvTitulo"
@@ -35,7 +36,9 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/pink_primary"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
             <TextView
                 android:id="@+id/tvTipo"
@@ -44,7 +47,9 @@
                 android:textColor="@color/pink_accent"
                 android:textSize="14sp"
                 android:textStyle="italic"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
             <TextView
                 android:id="@+id/tvDescripcion"
@@ -59,15 +64,15 @@
 
         <ImageButton
             android:id="@+id/btnFavorite"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_margin="4dp"
+            android:layout_margin="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@android:drawable/btn_star_big_off"
+            android:padding="4dp"
             android:scaleType="fitCenter"
-            app:tint="@color/pink_primary" />
+            android:src="@android:drawable/btn_star_big_off" />
 
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

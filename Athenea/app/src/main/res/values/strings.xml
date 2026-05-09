@@ -51,4 +51,10 @@
     <string name="text_list">Lista de Recursos</string>
     <string name="msg_recurso_eliminado">Recurso eliminado correctamente</string>
     <string name="desc_cerrar">Cerrar pantalla</string>
+
+    <string name="btn_ver_recurso">Ver Recurso</string>
+    <string name="btn_guardar_favorito">Guardar Favoritos</string>
+    <string name="btn_quitar_favorito">Quitar Favoritos</string>
+    <string name="califica_recurso">Califica este recurso:</string>
+    <string name="conteo_votos_format">%1$d usuarios - Promedio: %2$.1f</string>
 </resources>
