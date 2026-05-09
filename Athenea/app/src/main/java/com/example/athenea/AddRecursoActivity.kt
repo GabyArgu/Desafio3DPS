@@ -19,9 +19,10 @@ class AddRecursoActivity : AppCompatActivity() {
         binding = ActivityAddRecursoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 1. Configurar el Spinner primero
         setupSpinner()
 
-        // Revisar si venimos de un clic en la lista (Modo Edición)
+        // 2. Recibir datos si es edición
         recursoAEditar = intent.getSerializableExtra("RECURSO_EDITAR") as? Recurso
 
         if (recursoAEditar != null) {
@@ -46,9 +47,8 @@ class AddRecursoActivity : AppCompatActivity() {
     }
 
     private fun prellenarDatos(recurso: Recurso) {
-        // Cambiamos el texto del botón y el título para que el usuario sepa que edita
         binding.btnGuardar.text = "Actualizar Cambios"
-        // Si tienes un TextView de título en el XML:
+        // Si tienes un TextView para el título de la pantalla:
         // binding.tvTitleAdd.text = "Editar Recurso"
 
         binding.etTitulo.setText(recurso.titulo)
@@ -56,10 +56,14 @@ class AddRecursoActivity : AppCompatActivity() {
         binding.etEnlace.setText(recurso.enlace)
         binding.etImagen.setText(recurso.imagen)
 
-        // Seleccionar el tipo correcto en el spinner
         val adapter = binding.spinnerTipo.adapter as ArrayAdapter<String>
-        val position = adapter.getPosition(recurso.tipo)
-        binding.spinnerTipo.setSelection(position)
+
+        // Buscamos la posición del texto que viene de la API
+        val posicion = (0 until adapter.count).firstOrNull {
+            adapter.getItem(it) == recurso.tipo
+        } ?: 0 // Si no lo encuentra, selecciona el primero por defecto
+
+        binding.spinnerTipo.setSelection(posicion)
     }
 
     private fun validarFormulario(): Boolean {
@@ -81,7 +85,7 @@ class AddRecursoActivity : AppCompatActivity() {
 
     private fun ejecutarAccion() {
         val recursoFinal = Recurso(
-            id = recursoAEditar?.id, // Mantiene el ID si es edición
+            id = recursoAEditar?.id,
             titulo = binding.etTitulo.text.toString().trim(),
             descripcion = binding.etDescripcion.text.toString().trim(),
             tipo = binding.spinnerTipo.selectedItem.toString(),
@@ -89,7 +93,6 @@ class AddRecursoActivity : AppCompatActivity() {
             imagen = binding.etImagen.text.toString().trim().ifEmpty { "https://via.placeholder.com/300" }
         )
 
-        // Si recursoAEditar es null -> POST (Crear). Si no -> PUT (Actualizar)
         val call = if (recursoAEditar == null) {
             RetrofitClient.instance.addRecurso(recursoFinal)
         } else {
