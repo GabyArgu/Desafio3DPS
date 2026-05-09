@@ -8,10 +8,9 @@
     app:cardCornerRadius="20dp"
     app:cardElevation="4dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:padding="12dp">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -26,6 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_toEndOf="@id/ivRecurso"
+            android:layout_toStartOf="@+id/btnFavorite"
             android:layout_marginStart="16dp">
 
             <TextView
@@ -54,7 +55,19 @@
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:lineSpacingExtra="2dp"/>
-
         </LinearLayout>
-    </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnFavorite"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/btn_star_big_off"
+            android:scaleType="fitCenter"
+            app:tint="@color/pink_primary" />
+
+    </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

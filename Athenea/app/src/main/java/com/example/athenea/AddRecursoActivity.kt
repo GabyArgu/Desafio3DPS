@@ -49,7 +49,6 @@ class AddRecursoActivity : AppCompatActivity() {
     private fun showCustomToast(message: String) {
         val inflater = LayoutInflater.from(this)
         val layout = inflater.inflate(R.layout.custom_toast, null)
-
         val text = layout.findViewById<TextView>(R.id.toast_text)
         text.text = message
 
@@ -106,7 +105,7 @@ class AddRecursoActivity : AppCompatActivity() {
             RetrofitClient.instance.deleteRecurso(id).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
-                        showCustomToast(getString(R.string.msg_recurso_eliminado))
+                        showCustomToast("Recurso eliminado correctamente")
                         finish()
                     }
                 }
@@ -120,11 +119,11 @@ class AddRecursoActivity : AppCompatActivity() {
     private fun validarFormulario(): Boolean {
         var valido = true
         if (binding.etTitulo.text.toString().isBlank()) {
-            binding.etTitulo.error = getString(R.string.error_campo_obligatorio)
+            binding.etTitulo.error = "Campo obligatorio"
             valido = false
         }
         if (binding.etEnlace.text.toString().isBlank()) {
-            binding.etEnlace.error = getString(R.string.error_campo_obligatorio)
+            binding.etEnlace.error = "Campo obligatorio"
             valido = false
         }
         return valido
@@ -149,8 +148,8 @@ class AddRecursoActivity : AppCompatActivity() {
         call.enqueue(object : Callback<Recurso> {
             override fun onResponse(call: Call<Recurso>, response: Response<Recurso>) {
                 if (response.isSuccessful) {
-                    val msgId = if (recursoAEditar == null) R.string.msg_recurso_guardado else R.string.msg_recurso_editado
-                    showCustomToast(getString(msgId))
+                    val msg = if (recursoAEditar == null) "Recurso guardado" else "Recurso editado"
+                    showCustomToast(msg)
                     finish()
                 }
             }

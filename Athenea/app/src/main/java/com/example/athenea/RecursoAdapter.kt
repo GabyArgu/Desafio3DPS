@@ -1,14 +1,16 @@
 package com.example.athenea
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.athenea.databinding.ItemRecursoBinding
 
-class RecursoAdapter(private val recursos: List<Recurso>) :
-    RecyclerView.Adapter<RecursoAdapter.RecursoViewHolder>() {
+class RecursosAdapter(
+    private var recursos: List<Recurso>,
+    private val onFavoriteClick: (Recurso) -> Unit,
+    private val onItemClick: (Recurso) -> Unit
+) : RecyclerView.Adapter<RecursosAdapter.RecursoViewHolder>() {
 
     class RecursoViewHolder(val binding: ItemRecursoBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -23,21 +25,33 @@ class RecursoAdapter(private val recursos: List<Recurso>) :
         holder.binding.tvTipo.text = recurso.tipo
         holder.binding.tvDescripcion.text = recurso.descripcion
 
-        // Usamos Glide para cargar la imagen y redondeamos con el estilo del XML
+        // Lógica de la estrella: rellena si es favorito, vacía si no
+        val starIcon = if (recurso.isFavorite) {
+            android.R.drawable.btn_star_big_on
+        } else {
+            android.R.drawable.btn_star_big_off
+        }
+        holder.binding.btnFavorite.setImageResource(starIcon)
+
         Glide.with(holder.itemView.context)
             .load(recurso.imagen)
-            .placeholder(R.drawable.iconoaten)
-            .error(R.drawable.iconoaten)
+            .placeholder(R.drawable.logoaten)
+            .error(R.drawable.logoaten)
             .into(holder.binding.ivRecurso)
 
-        // Acción al tocar la tarjeta: Abrir edición
+        holder.binding.btnFavorite.setOnClickListener {
+            onFavoriteClick(recurso)
+        }
+
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, AddRecursoActivity::class.java)
-            // Esto solo funciona si Recurso es Serializable
-            intent.putExtra("RECURSO_EDITAR", recurso)
-            holder.itemView.context.startActivity(intent)
+            onItemClick(recurso)
         }
     }
 
     override fun getItemCount(): Int = recursos.size
+
+    fun actualizarLista(nuevaLista: List<Recurso>) {
+        this.recursos = nuevaLista
+        notifyDataSetChanged()
+    }
 }

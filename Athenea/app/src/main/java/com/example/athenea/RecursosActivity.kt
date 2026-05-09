@@ -2,9 +2,13 @@ package com.example.athenea
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.athenea.databinding.ActivityRecursosBinding
 import retrofit2.Call
@@ -14,49 +18,132 @@ import retrofit2.Response
 class RecursosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecursosBinding
+    private var listaOriginal = mutableListOf<Recurso>()
+    private lateinit var adapter: RecursosAdapter
+    private var userRole: String = "Estudiante"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecursosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userRole = intent.getStringExtra("USER_ROLE") ?: "Estudiante"
-
-        // El FAB solo es para docentes
+        userRole = intent.getStringExtra("USER_ROLE") ?: "Estudiante"
         binding.fabAdd.visibility = if (userRole == "Docente") View.VISIBLE else View.GONE
 
-        binding.fabAdd.setOnClickListener {
-            val intent = Intent(this, AddRecursoActivity::class.java)
-            startActivity(intent)
-        }
-
         setupRecyclerView()
-    }
+        setupSearchView()
+        cargarRecursos()
 
-    // Usamos onResume para que la lista se refresque al volver de AddRecursoActivity
-    override fun onResume() {
-        super.onResume()
-        cargarRecursosDesdeApi()
+        binding.fabAdd.setOnClickListener {
+            startActivity(Intent(this, AddRecursoActivity::class.java))
+        }
     }
 
     private fun setupRecyclerView() {
+        adapter = RecursosAdapter(
+            recursos = mutableListOf(),
+            onFavoriteClick = { recurso ->
+                toggleFavorite(recurso)
+            },
+            onItemClick = { recurso ->
+                if (userRole == "Docente") {
+                    val intent = Intent(this, AddRecursoActivity::class.java)
+                    intent.putExtra("RECURSO_EDITAR", recurso)
+                    startActivity(intent)
+                }
+            }
+        )
         binding.rvRecursos.layoutManager = LinearLayoutManager(this)
+        binding.rvRecursos.adapter = adapter
     }
 
-    private fun cargarRecursosDesdeApi() {
+    private fun toggleFavorite(recurso: Recurso) {
+        val idRecurso = recurso.id ?: return // Si el ID es nulo, salimos para evitar el crash
+
+        val nuevoEstado = !recurso.isFavorite
+        recurso.isFavorite = nuevoEstado
+        adapter.notifyDataSetChanged() // Refresco inmediato para feedback visual rápido
+
+        RetrofitClient.instance.updateRecurso(idRecurso, recurso).enqueue(object : Callback<Recurso> {
+            override fun onResponse(call: Call<Recurso>, response: Response<Recurso>) {
+                if (response.isSuccessful) {
+                    val mensaje = if (nuevoEstado) "Añadido a favoritos" else "Quitado de favoritos"
+                    showCustomToast(mensaje)
+                } else {
+                    // Revertimos el cambio si la API falla
+                    recurso.isFavorite = !nuevoEstado
+                    adapter.notifyDataSetChanged()
+                    showCustomToast("Error al guardar en servidor")
+                }
+            }
+
+            override fun onFailure(call: Call<Recurso>, t: Throwable) {
+                // Revertimos el cambio si no hay internet
+                recurso.isFavorite = !nuevoEstado
+                adapter.notifyDataSetChanged()
+                showCustomToast("Sin conexión: No se guardó el favorito")
+            }
+        })
+    }
+
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filtrar(newText)
+                return true
+            }
+        })
+    }
+
+    private fun filtrar(texto: String?) {
+        val query = texto?.lowercase() ?: ""
+        val filtrados = if (query.isEmpty()) {
+            listaOriginal
+        } else {
+            listaOriginal.filter {
+                it.titulo.lowercase().contains(query) ||
+                        it.tipo.lowercase().contains(query) ||
+                        it.id.toString() == query
+            }
+        }
+        adapter.actualizarLista(filtrados)
+    }
+
+    private fun cargarRecursos() {
+        binding.progressBar.visibility = View.VISIBLE
         RetrofitClient.instance.getRecursos().enqueue(object : Callback<List<Recurso>> {
             override fun onResponse(call: Call<List<Recurso>>, response: Response<List<Recurso>>) {
+                binding.progressBar.visibility = View.GONE
                 if (response.isSuccessful) {
-                    val lista = response.body() ?: emptyList()
-                    binding.rvRecursos.adapter = RecursoAdapter(lista)
-                } else {
-                    Toast.makeText(this@RecursosActivity, "Error al sincronizar datos", Toast.LENGTH_SHORT).show()
+                    listaOriginal = response.body()?.toMutableList() ?: mutableListOf()
+                    adapter.actualizarLista(listaOriginal)
                 }
             }
 
             override fun onFailure(call: Call<List<Recurso>>, t: Throwable) {
-                Toast.makeText(this@RecursosActivity, "Sin conexión al servidor", Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                showCustomToast("Error al cargar recursos")
             }
         })
+    }
+
+    private fun showCustomToast(message: String) {
+        val inflater = LayoutInflater.from(this)
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+        val text = layout.findViewById<TextView>(R.id.toast_text)
+        text.text = message
+
+        val customToast = Toast(applicationContext)
+        customToast.setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 150)
+        customToast.duration = Toast.LENGTH_SHORT
+        customToast.view = layout
+        customToast.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarRecursos()
     }
 }

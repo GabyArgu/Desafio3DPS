@@ -8,5 +8,6 @@ data class Recurso(
     val descripcion: String,
     val tipo: String,
     val enlace: String,
-    val imagen: String
+    val imagen: String,
+    var isFavorite: Boolean = false
 ) : Serializable
