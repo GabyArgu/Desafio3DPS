@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_bg">
@@ -35,7 +36,8 @@
                 android:layout_marginTop="60dp"
                 android:layout_marginBottom="10dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/logoaten" />
+                android:src="@drawable/logoaten"
+                android:contentDescription="@string/app_name" />
 
             <TextView
                 android:id="@+id/tvTitleAdd"
@@ -54,10 +56,12 @@
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/rounded_input"
                 android:hint="@string/hint_titulo"
+                android:importantForAutofill="no"
                 android:inputType="textCapSentences"
                 android:paddingHorizontal="20dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/pink_accent" />
+                android:textColorHint="@color/pink_accent"
+                tools:ignore="Autofill" />
 
             <EditText
                 android:id="@+id/etDescripcion"
@@ -67,10 +71,12 @@
                 android:background="@drawable/rounded_input"
                 android:gravity="top"
                 android:hint="@string/hint_descripcion"
+                android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:padding="20dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/pink_accent" />
+                android:textColorHint="@color/pink_accent"
+                tools:ignore="Autofill" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -83,7 +89,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/pink_accent"
-                    android:paddingStart="8dp" />
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp" />
             </FrameLayout>
 
             <EditText
@@ -93,10 +100,12 @@
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/rounded_input"
                 android:hint="@string/hint_enlace"
+                android:importantForAutofill="no"
                 android:inputType="textUri"
                 android:paddingHorizontal="20dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/pink_accent" />
+                android:textColorHint="@color/pink_accent"
+                tools:ignore="Autofill" />
 
             <EditText
                 android:id="@+id/etImagen"
@@ -105,10 +114,12 @@
                 android:layout_marginBottom="40dp"
                 android:background="@drawable/rounded_input"
                 android:hint="@string/hint_imagen"
+                android:importantForAutofill="no"
                 android:inputType="textUri"
                 android:paddingHorizontal="20dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/pink_accent" />
+                android:textColorHint="@color/pink_accent"
+                tools:ignore="Autofill" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnGuardar"

@@ -15,20 +15,22 @@
         android:background="#E19CBB" />
 
     <TextView
+        android:id="@+id/tvLogoutTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="¿Cerrar Sesión?"
+        android:text="@string/title_logout"
         android:textColor="#FF017E"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textAlignment="center" />
 
     <TextView
+        android:id="@+id/tvLogoutMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="24dp"
-        android:text="¿Estás seguro que deseas salir de Athenea?"
+        android:text="@string/msg_confirm_logout"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
@@ -39,7 +41,7 @@
         android:layout_height="55dp"
         android:background="@drawable/rounded_input"
         app:backgroundTint="#FF017E"
-        android:text="Sí, salir ahora"
+        android:text="@string/btn_confirm_logout"
         android:textAllCaps="false"
         android:textColor="#070103"
         android:textStyle="bold" />
@@ -51,7 +53,7 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/rounded_input"
         app:backgroundTint="#0D1216"
-        android:text="Cancelar"
+        android:text="@string/btn_cancel_logout"
         android:textAllCaps="false"
         android:textColor="#E19CBB" />
 </LinearLayout>

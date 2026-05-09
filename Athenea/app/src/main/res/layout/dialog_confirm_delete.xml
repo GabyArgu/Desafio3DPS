@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/dark_bg"
+    android:background="#0D1216"
     android:orientation="vertical"
     android:padding="24dp">
 
@@ -12,13 +12,13 @@
         android:layout_height="4dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"
-        android:background="@color/pink_accent" />
+        android:background="#E19CBB" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="¿Eliminar Recurso?"
-        android:textColor="@color/pink_primary"
+        android:text="@string/title_delete"
+        android:textColor="#FF017E"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textAlignment="center" />
@@ -30,7 +30,7 @@
         android:layout_marginBottom="24dp"
         android:text="@string/confirm_delete"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="#FFFFFF"
         android:textSize="16sp" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -38,10 +38,10 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@drawable/rounded_input"
-        app:backgroundTint="@color/pink_primary"
-        android:text="Sí, eliminar de Athenea"
+        app:backgroundTint="#FF017E"
+        android:text="@string/btn_confirm_delete"
         android:textAllCaps="false"
-        android:textColor="@color/black_deep"
+        android:textColor="#070103"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -50,8 +50,8 @@
         android:layout_height="55dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/rounded_input"
-        app:backgroundTint="@color/dark_bg"
-        android:text="Cancelar"
+        app:backgroundTint="#0D1216"
+        android:text="@string/btn_cancelar"
         android:textAllCaps="false"
-        android:textColor="@color/pink_accent" />
+        android:textColor="#E19CBB" />
 </LinearLayout>

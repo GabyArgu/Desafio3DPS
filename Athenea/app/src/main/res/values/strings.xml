@@ -66,4 +66,26 @@
     <string name="filtro_favs">Favoritos</string>
     <string name="filter_hint">Buscar por título, ID o tipo...</string>
     <string name="msg_delete_success">Recurso eliminado correctamente</string>
+
+    <string name="title_delete">¿Eliminar Recurso?</string>
+    <string name="btn_confirm_delete">Sí, eliminar de Athenea</string>
+
+
+    <string name="title_logout">¿Cerrar Sesión?</string>
+    <string name="msg_logout">¿Estás seguro que deseas salir de Athenea?</string>
+
+
+    <string name="msg_save_success">Recurso guardado con éxito</string>
+    <string name="msg_update_success">Cambios guardados</string>
+    <string name="msg_fav_add">Añadido a favoritos</string>
+    <string name="msg_fav_remove">Quitado de favoritos</string>
+    <string name="msg_error_conexion">Error de conexión con Athenea</string>
+    <string name="msg_rating_thanks">¡Gracias por calificar!</string>
+
+    <string name="msg_confirm_logout">¿Estás seguro que deseas salir de Athenea?</string>
+    <string name="btn_confirm_logout">Sí, salir ahora</string>
+    <string name="btn_cancel_logout">Cancelar</string>
+
+    <string name="desc_imagen_recurso">Imagen ilustrativa del material educativo</string>
+    <string name="desc_boton_favorito">Botón para guardar o quitar de favoritos</string>
 </resources>

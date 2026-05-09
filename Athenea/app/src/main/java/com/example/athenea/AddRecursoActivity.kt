@@ -26,21 +26,35 @@ class AddRecursoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupSpinner()
+
+        // Recuperar objeto para editar si existe
         recursoAEditar = intent.getSerializableExtra("RECURSO_EDITAR") as? Recurso
 
         if (recursoAEditar != null) {
             prellenarDatos(recursoAEditar!!)
         }
 
-        binding.btnCerrar.setOnClickListener { finish() }
-        binding.btnGuardar.setOnClickListener { if (validarFormulario()) ejecutarAccion() }
-        binding.btnEliminar.setOnClickListener { mostrarDialogoEliminar() }
+        // --- BOTONES DE NAVEGACIÓN ---
+
+        // Esta es la X para cerrar/cancelar
+        binding.btnCerrar.setOnClickListener {
+            finish()
+        }
+
+        binding.btnGuardar.setOnClickListener {
+            if (validarFormulario()) ejecutarAccion()
+        }
+
+        binding.btnEliminar.setOnClickListener {
+            mostrarDialogoEliminar()
+        }
     }
 
     private fun prellenarDatos(recurso: Recurso) {
         binding.tvTitleAdd.text = "Editar Recurso"
         binding.btnGuardar.text = "Actualizar Cambios"
         binding.btnEliminar.visibility = View.VISIBLE
+
         binding.etTitulo.setText(recurso.titulo)
         binding.etDescripcion.setText(recurso.descripcion)
         binding.etEnlace.setText(recurso.enlace)
@@ -53,12 +67,21 @@ class AddRecursoActivity : AppCompatActivity() {
 
     private fun mostrarDialogoEliminar() {
         val dialog = BottomSheetDialog(this)
+        // Usamos el diseño exacto que pasaste
         val view = layoutInflater.inflate(R.layout.dialog_confirm_delete, null)
-        view.findViewById<Button>(R.id.btnConfirmarEliminar).setOnClickListener {
+
+        val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmarEliminar)
+        val btnCancelar = view.findViewById<Button>(R.id.btnCancelarEliminar)
+
+        btnConfirmar.setOnClickListener {
             dialog.dismiss()
             eliminarRecurso()
         }
-        view.findViewById<Button>(R.id.btnCancelarEliminar).setOnClickListener { dialog.dismiss() }
+
+        btnCancelar.setOnClickListener {
+            dialog.dismiss()
+        }
+
         dialog.setContentView(view)
         dialog.show()
     }
@@ -70,6 +93,8 @@ class AddRecursoActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         showCustomToast("Recurso eliminado correctamente")
                         finish()
+                    } else {
+                        showCustomToast("No se pudo eliminar el recurso")
                     }
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
@@ -82,11 +107,11 @@ class AddRecursoActivity : AppCompatActivity() {
     private fun validarFormulario(): Boolean {
         var valido = true
         if (binding.etTitulo.text.toString().isBlank()) {
-            binding.etTitulo.error = "Campo obligatorio"
+            binding.etTitulo.error = "El título es obligatorio"
             valido = false
         }
         if (binding.etEnlace.text.toString().isBlank()) {
-            binding.etEnlace.error = "Campo obligatorio"
+            binding.etEnlace.error = "El enlace es obligatorio"
             valido = false
         }
         return valido
@@ -102,17 +127,25 @@ class AddRecursoActivity : AppCompatActivity() {
             imagen = binding.etImagen.text.toString().trim().ifEmpty { "https://via.placeholder.com/300" }
         )
 
-        val call = if (recursoAEditar == null) RetrofitClient.instance.addRecurso(recursoFinal)
-        else RetrofitClient.instance.updateRecurso(recursoAEditar!!.id!!, recursoFinal)
+        val call = if (recursoAEditar == null) {
+            RetrofitClient.instance.addRecurso(recursoFinal)
+        } else {
+            RetrofitClient.instance.updateRecurso(recursoAEditar!!.id!!, recursoFinal)
+        }
 
         call.enqueue(object : Callback<Recurso> {
             override fun onResponse(call: Call<Recurso>, response: Response<Recurso>) {
                 if (response.isSuccessful) {
-                    showCustomToast(if (recursoAEditar == null) "Recurso guardado" else "Recurso editado")
+                    val msg = if (recursoAEditar == null) "Recurso guardado con éxito" else "Cambios guardados"
+                    showCustomToast(msg)
                     finish()
+                } else {
+                    showCustomToast("Error al procesar la solicitud")
                 }
             }
-            override fun onFailure(call: Call<Recurso>, t: Throwable) { showCustomToast("Error de conexión") }
+            override fun onFailure(call: Call<Recurso>, t: Throwable) {
+                showCustomToast("Error de conexión con Athenea")
+            }
         })
     }
 
