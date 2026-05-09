@@ -34,7 +34,10 @@ class AddRecursoActivity : AppCompatActivity() {
             prellenarDatos(recursoAEditar!!)
         }
 
-        binding.btnCerrar.setOnClickListener { finish() }
+        // --- BOTÓN CERRAR (CANCELAR) ---
+        binding.btnCerrar.setOnClickListener {
+            finish() // Cierra la actividad sin guardar nada
+        }
 
         binding.btnGuardar.setOnClickListener {
             if (validarFormulario()) ejecutarAccion()
@@ -50,7 +53,7 @@ class AddRecursoActivity : AppCompatActivity() {
         binding.btnGuardar.text = "Actualizar Cambios"
         binding.btnEliminar.visibility = View.VISIBLE
 
-        // Actualizar Estadísticas para el docente
+        // Dashboard de estadísticas para el docente
         binding.layoutStats.visibility = View.VISIBLE
         binding.tvStatRating.text = String.format("%.1f", recurso.rating)
         binding.tvStatVotos.text = recurso.voteCount.toString()
@@ -88,11 +91,11 @@ class AddRecursoActivity : AppCompatActivity() {
                         showCustomToast("Recurso eliminado correctamente")
                         finish()
                     } else {
-                        showCustomToast("No se pudo eliminar el recurso")
+                        showCustomToast("Error al eliminar el recurso")
                     }
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
-                    showCustomToast("Error de red al eliminar")
+                    showCustomToast("Error de conexión al eliminar")
                 }
             })
         }
@@ -119,6 +122,7 @@ class AddRecursoActivity : AppCompatActivity() {
             tipo = binding.spinnerTipo.selectedItem.toString(),
             enlace = binding.etEnlace.text.toString().trim(),
             imagen = binding.etImagen.text.toString().trim().ifEmpty { "https://via.placeholder.com/300" },
+            // Mantenemos los datos de rendimiento existentes
             rating = recursoAEditar?.rating ?: 0.0,
             voteCount = recursoAEditar?.voteCount ?: 0,
             isFavorite = recursoAEditar?.isFavorite ?: false
@@ -133,14 +137,15 @@ class AddRecursoActivity : AppCompatActivity() {
         call.enqueue(object : Callback<Recurso> {
             override fun onResponse(call: Call<Recurso>, response: Response<Recurso>) {
                 if (response.isSuccessful) {
-                    showCustomToast(if (recursoAEditar == null) "Recurso guardado" else "Cambios guardados")
+                    val msg = if (recursoAEditar == null) "Recurso guardado" else "Cambios guardados"
+                    showCustomToast(msg)
                     finish()
                 } else {
-                    showCustomToast("Error al procesar solicitud")
+                    showCustomToast("Error al procesar la solicitud")
                 }
             }
             override fun onFailure(call: Call<Recurso>, t: Throwable) {
-                showCustomToast("Error de conexión")
+                showCustomToast("Sin conexión con Athenea")
             }
         })
     }

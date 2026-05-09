@@ -16,6 +16,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/desc_cerrar"
         android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:elevation="4dp"
         app:tint="@color/pink_primary" />
 
     <ScrollView
