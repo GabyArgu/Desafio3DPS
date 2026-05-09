@@ -1,5 +1,7 @@
 package com.example.athenea
 
+import java.io.Serializable
+
 data class Recurso(
     val id: String? = null,
     val titulo: String,
@@ -7,4 +9,4 @@ data class Recurso(
     val tipo: String,
     val enlace: String,
     val imagen: String
-)
+) : Serializable
